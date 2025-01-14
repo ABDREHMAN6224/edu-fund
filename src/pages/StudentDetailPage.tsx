@@ -8,6 +8,9 @@ export const StudentDetailPage = () => {
 
   // Mock student data
   const student = students.find(s=>s.id==id)
+  if(!student){
+    return null
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 py-12">
