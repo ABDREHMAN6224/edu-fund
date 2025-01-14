@@ -5,7 +5,7 @@ import { HomePage } from './pages/HomePage';
 import { StudentsPage } from './pages/StudentsPage';
 import { StudentDetailPage } from './pages/StudentDetailPage';
 import { ChatAssistant } from './components/ChatAssistant';
-import AboutPage from './pages/AboutPage';
+import { AboutPage } from './pages/AboutPage';
 
 function App() {
   return (

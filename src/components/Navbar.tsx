@@ -15,9 +15,9 @@ export const Navbar = () => {
           </div>
           <div className="flex items-center space-x-8">
             <Link to="/students" className="text-gray-700 hover:text-indigo-600">Students</Link>
-            <Link to="/team" className="text-gray-700 hover:text-indigo-600">Team</Link>
-            <Link to="/testimonials" className="text-gray-700 hover:text-indigo-600">Testimonials</Link>
-            <Link to="/statistics" className="text-gray-700 hover:text-indigo-600">Statistics</Link>
+            {/* <Link to="/team" className="text-gray-700 hover:text-indigo-600">Team</Link> */}
+            {/* <Link to="/testimonials" className="text-gray-700 hover:text-indigo-600">Testimonials</Link> */}
+            {/* <Link to="/statistics" className="text-gray-700 hover:text-indigo-600">Statistics</Link> */}
           </div>
         </div>
       </div>

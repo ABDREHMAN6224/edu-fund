@@ -1,39 +1,13 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { Linkedin, Twitter, FileText, Award, Briefcase } from 'lucide-react';
+import { students } from '../data/student';
 
 export const StudentDetailPage = () => {
   const { id } = useParams();
 
   // Mock student data
-  const student = {
-    id: '1',
-    name: 'Sarah Ahmed',
-    profilePicture: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330',
-    gender: 'Female',
-    area: 'Punjab',
-    yearOfStudy: 3,
-    fundRequired: 150000,
-    fieldOfStudy: 'Computer Science',
-    currentCourse: 'Bachelor of Computer Science',
-    semester: 5,
-    grades: 3.8,
-    university: 'LUMS',
-    linkedin: 'https://linkedin.com/in/sarah-ahmed',
-    twitter: 'https://twitter.com/sarahahmed',
-    resume: 'https://example.com/resume.pdf',
-    projects: [
-      {
-        title: 'AI-Powered Study Assistant',
-        description: 'Developed a machine learning model to help students optimize their study schedules.'
-      }
-    ],
-    achievements: [
-      'Dean\'s List 2023',
-      'First Place in National Programming Competition'
-    ],
-    isGraduated: false
-  };
+  const student = students.find(s=>s.id==id)
 
   return (
     <div className="min-h-screen bg-gray-50 py-12">
