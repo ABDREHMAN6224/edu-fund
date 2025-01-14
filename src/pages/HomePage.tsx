@@ -2,11 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { DonorPreferences } from '../components/DonorPreferences';
 import { StudentCard } from '../components/StudentCard';
-import { Footer } from '../components/Footer';
-import { MessageSquare, Users, TrendingUp, Award, BookOpen, Heart, ArrowRight, CheckCircle, Briefcase } from 'lucide-react';
+import { MessageSquare, Users, TrendingUp, Award,  Heart, ArrowRight, CheckCircle, Briefcase } from 'lucide-react';
 import { Student } from '../types';
 
+const ITEMS_PER_PAGE = 4;
+
 export const HomePage = () => {
+  const [page, setPage] = React.useState(1);
   // Rest of the component remains the same
   const recommendedStudents = [
     {
@@ -25,8 +27,54 @@ export const HomePage = () => {
       projects: [],
       achievements: [],
       isGraduated: false
-    }
+    },
+    {
+      id: '1',
+      name: 'Sarah Ahmed',
+      profilePicture: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330',
+      gender: 'Female',
+      area: 'Punjab',
+      yearOfStudy: 3,
+      fundRequired: 150000,
+      fieldOfStudy: 'Computer Science',
+      currentCourse: 'Bachelor of Computer Science',
+      semester: 5,
+      grades: 3.8,
+      university: 'LUMS',
+      projects: [],
+      achievements: [],
+      isGraduated: false
+    },
+    {
+      id: '1',
+      name: 'Sarah Ahmed',
+      profilePicture: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330',
+      gender: 'Female',
+      area: 'Punjab',
+      yearOfStudy: 3,
+      fundRequired: 150000,
+      fieldOfStudy: 'Computer Science',
+      currentCourse: 'Bachelor of Computer Science',
+      semester: 5,
+      grades: 3.8,
+      university: 'LUMS',
+      projects: [],
+      achievements: [],
+      isGraduated: false
+    },
   ];
+
+  const totalItems = recommendedStudents.length;
+  const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+
+  const startIndex = (page - 1) * ITEMS_PER_PAGE;
+
+  const currentStudents = recommendedStudents.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+
+
+  const handleNextPage = (i:number) => {
+    setPage(i);
+  }
 
   const stats = [
     { icon: Users, label: 'Active Students', value: '500+' },
@@ -131,6 +179,41 @@ export const HomePage = () => {
           </div>
         </div>
       </div>
+            {/* Testimonials Section */}
+<div className="py-16 bg-gray-50">
+  <div className="max-w-7xl mx-auto px-4">
+    <h2 className="text-3xl font-bold text-center mb-12">What Our Donors Say</h2>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {[
+        {
+          name: 'John Doe',
+          feedback: 'Supporting talented students has been a rewarding experience. I am proud to contribute to their success!',
+          image: 'https://images.unsplash.com/photo-1502685104226-ee32379fefbe'
+        },
+        {
+          name: 'Jane Smith',
+          feedback: 'Knowing I am helping students achieve their dreams gives me immense satisfaction.',
+          image: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e'
+        },
+        {
+          name: 'Robert Johnson',
+          feedback: 'This platform makes it easy to connect with and support deserving students.',
+          image: 'https://images.unsplash.com/photo-1595152772835-219674b2a8a6'
+        }
+      ].map((testimonial, index) => (
+        <div key={index} className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 text-center">
+          <img
+            src={testimonial.image}
+            alt={testimonial.name}
+            className="w-16 h-16 mx-auto rounded-full mb-4"
+          />
+          <h3 className="text-lg font-semibold mb-2">{testimonial.name}</h3>
+          <p className="text-gray-600 italic">"{testimonial.feedback}"</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
 
       {/* Impact Section */}
       <div className="py-16 bg-indigo-50">
@@ -160,22 +243,35 @@ export const HomePage = () => {
 
       {/* Main Content - Preferences and Recommendations */}
       <div className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-1">
-              <DonorPreferences />
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-1">
+            <DonorPreferences />
+          </div>
+          <div className="lg:col-span-2">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Recommended Students</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {currentStudents.map((student) => (
+                <StudentCard key={student.id} student={student as Student} />
+              ))}
             </div>
-            <div className="lg:col-span-2">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Recommended Students</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {recommendedStudents.map((student) => (
-                  <StudentCard key={student.id} student={student as Student} />
-                ))}
-              </div>
+            {/* Pagination Controls */}
+            <div className="mt-4 flex justify-center space-x-2">
+              {Array.from({ length: totalPages }, (_, i) => (
+                <button
+                  key={i}
+                  onClick={() => handleNextPage(i+1)}
+                  className={`px-4 py-2 rounded-md ${page === i + 1 ? 'bg-indigo-600 text-white' : 'bg-gray-200'}`}
+                >
+                  {i + 1}
+                </button>
+              ))}
             </div>
           </div>
         </div>
       </div>
+    </div>
+
 
       {/* Chatbot Button */}
       <div className="fixed bottom-8 right-8 animate-bounce">
@@ -184,7 +280,6 @@ export const HomePage = () => {
         </button>
       </div>
 
-      <Footer />
     </div>
   );
 };

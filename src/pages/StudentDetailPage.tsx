@@ -1,15 +1,14 @@
-import React from 'react';
 import { useParams } from 'react-router-dom';
-import { Linkedin, Twitter, FileText, Award, Briefcase } from 'lucide-react';
-import { students } from '../data/student';
+import { Linkedin, Twitter, FileText, Award } from 'lucide-react';
+import { studentsData as students } from '../data/student';
 
 export const StudentDetailPage = () => {
   const { id } = useParams();
 
-  // Mock student data
-  const student = students.find(s=>s.id==id)
-  if(!student){
-    return null
+  // Find the student by ID
+  const student = students.find((s) => s.id === id);
+  if (!student) {
+    return <div className="text-center mt-20 text-gray-600">Student not found.</div>;
   }
 
   return (
@@ -27,7 +26,12 @@ export const StudentDetailPage = () => {
               />
               <div className="mt-4 sm:mt-0 sm:ml-6 text-center sm:text-left">
                 <h1 className="text-2xl font-bold text-gray-900">{student.name}</h1>
-                <p className="text-gray-600">{student.currentCourse} at {student.university}</p>
+                <p className="text-gray-600">
+                  {student.currentCourse} at {student.university}
+                </p>
+                {student.isGraduated && (
+                  <p className="text-sm text-gray-500 mt-2">Graduated on: {student.graduationDate}</p>
+                )}
               </div>
             </div>
           </div>
@@ -40,68 +44,129 @@ export const StudentDetailPage = () => {
             <div className="bg-white p-6 rounded-lg shadow-md">
               <h2 className="text-lg font-semibold mb-4">Basic Information</h2>
               <div className="space-y-3">
-                <p><span className="font-medium">Field of Study:</span> {student.fieldOfStudy}</p>
-                <p><span className="font-medium">Year:</span> {student.yearOfStudy}rd Year</p>
-                <p><span className="font-medium">Semester:</span> {student.semester}</p>
-                <p><span className="font-medium">GPA:</span> {student.grades}</p>
-                <p><span className="font-medium">Area:</span> {student.area}</p>
+                <p>
+                  <span className="font-medium">Field of Study:</span> {student.fieldOfStudy}
+                </p>
+                <p>
+                  <span className="font-medium">Year:</span>{' '}
+                  {student.isGraduated ? 'Graduated' : `${student.yearOfStudy}rd Year`}
+                </p>
+                <p>
+                  <span className="font-medium">Semester:</span>{' '}
+                  {student.isGraduated ? 'N/A' : student.semester}
+                </p>
+                <p>
+                  <span className="font-medium">GPA:</span> {student.grades}
+                </p>
+                <p>
+                  <span className="font-medium">Area:</span> {student.area}
+                </p>
+                <p>
+                  <span className="font-medium">Eligible for Funding:</span>{' '}
+                  {student.grades >= 3.5 ? 'Yes' : 'No'}
+                </p>
               </div>
             </div>
 
             <div className="bg-white p-6 rounded-lg shadow-md">
               <h2 className="text-lg font-semibold mb-4">Connect</h2>
               <div className="space-y-4">
-                <a href={student.linkedin} className="flex items-center text-gray-600 hover:text-indigo-600">
-                  <Linkedin className="h-5 w-5 mr-2" />
-                  LinkedIn
-                </a>
-                <a href={student.twitter} className="flex items-center text-gray-600 hover:text-indigo-600">
-                  <Twitter className="h-5 w-5 mr-2" />
-                  Twitter
-                </a>
-                <a href={student.resume} className="flex items-center text-gray-600 hover:text-indigo-600">
-                  <FileText className="h-5 w-5 mr-2" />
-                  Resume
-                </a>
+                {student.linkedin && (
+                  <a
+                    href={student.linkedin}
+                    className="flex items-center text-gray-600 hover:text-indigo-600"
+                  >
+                    <Linkedin className="h-5 w-5 mr-2" />
+                    LinkedIn
+                  </a>
+                )}
+                {student.twitter && (
+                  <a
+                    href={student.twitter}
+                    className="flex items-center text-gray-600 hover:text-indigo-600"
+                  >
+                    <Twitter className="h-5 w-5 mr-2" />
+                    Twitter
+                  </a>
+                )}
+                {student.resume && (
+                  <a
+                    href={student.resume}
+                    className="flex items-center text-gray-600 hover:text-indigo-600"
+                  >
+                    <FileText className="h-5 w-5 mr-2" />
+                    Resume
+                  </a>
+                )}
               </div>
             </div>
           </div>
 
-          {/* Right Column - Projects & Achievements */}
+          {/* Right Column - Projects, Achievements, and Funding */}
           <div className="md:col-span-2 space-y-8">
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <h2 className="text-lg font-semibold mb-4">Projects</h2>
-              <div className="space-y-6">
-                {student.projects.map((project, index) => (
-                  <div key={index}>
-                    <h3 className="font-medium text-gray-900">{project.title}</h3>
-                    <p className="text-gray-600 mt-1">{project.description}</p>
+            {!student.isGraduated && (
+              <>
+                <div className="bg-white p-6 rounded-lg shadow-md">
+                  <h2 className="text-lg font-semibold mb-4">Projects</h2>
+                  <div className="space-y-6">
+                    {student.projects.map((project, index) => (
+                      <div key={index}>
+                        <h3 className="font-medium text-gray-900">{project.title}</h3>
+                        <p className="text-gray-600 mt-1">{project.description}</p>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            </div>
+                </div>
 
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <h2 className="text-lg font-semibold mb-4">Achievements</h2>
-              <div className="space-y-3">
-                {student.achievements.map((achievement, index) => (
-                  <div key={index} className="flex items-start">
-                    <Award className="h-5 w-5 text-indigo-600 mr-2 mt-0.5" />
-                    <span>{achievement}</span>
+                <div className="bg-white p-6 rounded-lg shadow-md">
+                  <h2 className="text-lg font-semibold mb-4">Achievements</h2>
+                  <div className="space-y-3">
+                    {student.achievements.map((achievement, index) => (
+                      <div key={index} className="flex items-start">
+                        <Award className="h-5 w-5 text-indigo-600 mr-2 mt-0.5" />
+                        <span>{achievement}</span>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            </div>
+                </div>
 
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <h2 className="text-lg font-semibold mb-4">Funding Required</h2>
-              <div className="text-center">
-                <p className="text-3xl font-bold text-indigo-600">${student.fundRequired.toLocaleString()}</p>
-                <button className="mt-4 bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700">
-                  Support {student.name.split(' ')[0]}'s Education
-                </button>
+                <div className="bg-white p-6 rounded-lg shadow-md">
+                  <h2 className="text-lg font-semibold mb-4">Funding Required</h2>
+                  <div className="text-center">
+                    <p className="text-3xl font-bold text-indigo-600">
+                      ${student.fundRequired.toLocaleString()}
+                    </p>
+                    <button className="mt-4 bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700">
+                      Support {student.name.split(' ')[0]}'s Education
+                    </button>
+                  </div>
+                </div>
+              </>
+            )}
+
+            {student.isGraduated && (
+              <div className="bg-white p-6 rounded-lg shadow-md">
+                <h2 className="text-lg font-semibold mb-4">Loan Repayment Status</h2>
+                <div className="space-y-3">
+                  <p>
+                    <span className="font-medium">Employer:</span> {student.currentEmployer || 'N/A'}
+                  </p>
+                  <p>
+                    <span className="font-medium">Position:</span> {student.jobPosition || 'N/A'}
+                  </p>
+                  <p>
+                    <span className="font-medium">Amount Repaid:</span> $
+                    {student.totalFundingReceived?.toLocaleString() || '0'}
+                  </p>
+                  <p>
+                    <span className="font-medium">Remaining Balance:</span> $
+                    {(
+                      student.fundRequired - (student.totalFundingReceived || 0)
+                    ).toLocaleString()}
+                  </p>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

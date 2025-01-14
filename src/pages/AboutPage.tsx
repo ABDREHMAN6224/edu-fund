@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { Footer } from '../components/Footer';
 import { Users, Heart, Award, BookOpen } from 'lucide-react';
 
 export const AboutPage = () => {
@@ -105,7 +104,6 @@ and inspiring individuals to achieve their dreams.
         </div>
       </div>
 
-      <Footer />
     </div>
   );
 };

@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { HomePage } from './pages/HomePage';
@@ -6,6 +5,8 @@ import { StudentsPage } from './pages/StudentsPage';
 import { StudentDetailPage } from './pages/StudentDetailPage';
 import { ChatAssistant } from './components/ChatAssistant';
 import { AboutPage } from './pages/AboutPage';
+import { Footer } from './components/Footer';
+import { StudentProvider } from './context/studentContext';
 
 function App() {
   return (
@@ -15,9 +16,14 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path='/about' element={<AboutPage />} />
-          <Route path="/students" element={<StudentsPage />} />
+          <Route path="/students" element={
+            <StudentProvider>
+              <StudentsPage />
+            </StudentProvider>
+            } />
           <Route path="/student/:id" element={<StudentDetailPage />} />
         </Routes>
+        <Footer />
         <ChatAssistant />
       </div>
     </Router>

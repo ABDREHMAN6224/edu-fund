@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Student } from '../types';
-import { GraduationCap, MapPin, Book } from 'lucide-react';
+import { GraduationCap, MapPin, Book, Briefcase, DollarSign } from 'lucide-react';
 
 interface StudentCardProps {
   student: Student;
@@ -32,11 +32,24 @@ export const StudentCard: React.FC<StudentCardProps> = ({ student }) => {
               <span>{student.university}</span>
             </div>
           </div>
-          <div className="mt-4">
-            <span className="inline-block bg-indigo-100 text-indigo-800 text-sm px-3 py-1 rounded-full">
-              Funding needed: ${student.fundRequired.toLocaleString()}
-            </span>
-          </div>
+          {student.isGraduated ? (
+            <div className="mt-4 text-gray-600">
+              <div className="flex items-center">
+                <Briefcase className="h-4 w-4 mr-2" />
+                <span>{student.currentEmployer} - {student.jobPosition}</span>
+              </div>
+              <div className="flex items-center mt-2">
+                <DollarSign className="h-4 w-4 mr-2" />
+                <span>Repaid: ${student.amountRepaid?.toLocaleString()} | Left: ${student.amountLeft?.toLocaleString()}</span>
+              </div>
+            </div>
+          ) : (
+            <div className="mt-4">
+              <span className={`inline-block text-sm px-3 py-1 rounded-full ${student.isEligibleForFunding ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                {student?.isEligibleForFunding ? 'Eligible for funding' : 'Not eligible for funding'}
+              </span>
+            </div>
+          )}
         </div>
       </div>
     </Link>

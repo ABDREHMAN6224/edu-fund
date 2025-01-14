@@ -74,7 +74,7 @@ export const ChatAssistant = () => {
   }
 
   return (
-    <div className={`fixed bottom-8 right-8 w-96 bg-white rounded-lg shadow-xl transition-all duration-300 ${isMinimized ? 'h-14' : 'h-[32rem]'}`}>
+    <div className={`fixed bottom-8 right-8 w-72 md:w-96 bg-white rounded-lg shadow-xl transition-all duration-300 ${isMinimized ? 'h-14' : 'h-[32rem]'}`}>
       {/* Header */}
       <div className="bg-indigo-600 text-white p-4 rounded-t-lg flex justify-between items-center">
         <div className="flex items-center space-x-2">
