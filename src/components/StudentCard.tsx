@@ -40,7 +40,7 @@ export const StudentCard: React.FC<StudentCardProps> = ({ student }) => {
               </div>
               <div className="flex items-center mt-2">
                 <DollarSign className="h-4 w-4 mr-2" />
-                <span>Repaid: ${student.amountRepaid?.toLocaleString()} | Left: ${student.amountLeft?.toLocaleString()}</span>
+                <span>Repaid: ${student.loanDetails?.amountPaid?.toLocaleString()} | Left: ${student.loanDetails?.remaining?.toLocaleString()}</span>
               </div>
             </div>
           ) : (

@@ -3,7 +3,7 @@ export interface Student {
   name: string;
   profilePicture: string;
   gender: 'Male' | 'Female' | 'Other';
-  area: 'KPK' | 'Punjab' | 'Balochistan' | 'Gilgit/Chitral' | 'Sindh'|'Islamabad';
+  area: string;
   yearOfStudy: 1 | 2 | 3 | 4|5;
   fundRequired: number;
   fieldOfStudy: string;
@@ -26,10 +26,18 @@ export interface Student {
   currentEmployer?: string;
   jobPosition?: string;
   email?: string;
-  amountRepaid?: number;
-  amountLeft?: number;
   isEligibleForFunding?: boolean; // New field
+  hasGraduated?: boolean; // New field
+  loanDetails?: {
+    amountPaid: number;
+    remaining: number;
+  };
+  currentEmployment?: {
+    position: string;
+    organization: string;
+  };
 }
+
 
 export interface TeamMember {
   name: string;

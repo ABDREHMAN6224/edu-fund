@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import { Linkedin, Twitter, FileText, Award } from 'lucide-react';
 import { studentsData as students } from '../data/student';
 
-export const StudentDetailPage = () => {
+export const StudentDetails = () => {
   const { id } = useParams();
 
   // Find the student by ID
@@ -156,12 +156,12 @@ export const StudentDetailPage = () => {
                   </p>
                   <p>
                     <span className="font-medium">Amount Repaid:</span> $
-                    {student.totalFundingReceived?.toLocaleString() || '0'}
+                    {student.loanDetails?.amountPaid.toLocaleString()|| 0}
                   </p>
                   <p>
                     <span className="font-medium">Remaining Balance:</span> $
                     {(
-                      student.fundRequired - (student.totalFundingReceived || 0)
+                      student.loanDetails?.remaining || (student.totalFundingReceived||0) - student.fundRequired|| 0
                     ).toLocaleString()}
                   </p>
                 </div>
@@ -173,3 +173,5 @@ export const StudentDetailPage = () => {
     </div>
   );
 };
+
+export default StudentDetails;

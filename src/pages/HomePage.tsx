@@ -12,7 +12,7 @@ export const HomePage = () => {
   // Rest of the component remains the same
   const recommendedStudents = [
     {
-      id: '1',
+      id: '3',
       name: 'Sarah Ahmed',
       profilePicture: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330',
       gender: 'Female',
@@ -46,7 +46,7 @@ export const HomePage = () => {
       isGraduated: false
     },
     {
-      id: '1',
+      id: '2',
       name: 'Sarah Ahmed',
       profilePicture: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330',
       gender: 'Female',
